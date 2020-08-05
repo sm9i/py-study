@@ -88,3 +88,76 @@ def str2float(s):
 
 
 print('str2float(\'123.456\') =', str2float('123.456'))
+
+print('------')
+
+
+# filter 用于过滤 筛选  类似 where
+
+
+# 保留奇数
+def is_odd(n):
+    return n % 2 == 1
+
+
+print(list(filter(is_odd, range(10))))
+
+
+# 奇数数列 生成器
+def _off_iter():
+    n = 1
+    while True:
+        n = n + 2
+        yield n
+
+
+# 筛选 如果 x 和n求余 大于 0 就保留
+
+def _not_divisible(n):
+    return lambda x: x % n > 0
+
+
+def primes():
+    yield 2
+    it = _off_iter()
+    while True:
+        n = next(it)
+        yield n
+        it = filter(_not_divisible(n), it)
+
+
+# 1000 内的所有素数
+for n in primes():
+    if n < 1000:
+        print(n)
+    else:
+        break
+
+
+# 求回数  反向然后和原数比较 秀
+def is_palindrome(n):
+    return int(str(n)[::-1]) == n
+
+
+print(list(filter(is_palindrome, range(55, 1000))))
+
+# 排序
+# key 类似一个数据处理
+# reverse 是否 倒叙
+a = sorted([323, 5342, 4534, -4534, -23], key=abs, reverse=True)
+print(a)
+
+L = [('Bob', 75), ('Adam', 92), ('Bart', 66), ('Lisa', 88)]
+
+
+# 按名字排序
+def by_name(t):
+    return t[0]
+
+
+def by_score(t):
+    return t[-1]
+
+
+print(sorted(L, key=by_name))
+print(sorted(L, key=by_score))
